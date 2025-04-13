@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>enggan ngoding sendiri</title>
+  <style>
+    body {
+      background-color: #000000;
+      color: rgb(234, 32, 32);
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .pantun {
+      font-size: 1.5em;
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    .cursor {
+      display: inline-block;
+      background-color: #0f0;
+      width: 10px;
+      height: 20px;
+      animation: blink 1s infinite;
+      vertical-align: bottom;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .info {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.8em;
+      color: #888;
+    }
+  </style>
+</head>
+<body onclick="startTyping()">
+  <div class="pantun" id="pantun">[Klik di mana saja untuk mulai]</div>
+  <div class="info">( dibuat oleh nairobi 1978)</div>
+
+  <audio id="typeSound" src="typewriter.mp3" preload="auto"></audio>
+
+  <script>
+    const teks = `Sorong papan tarik papan
+Buah keranji dalam perahu
+Scroll fesnuk dia gaskan
+Disuruh ngoding dia tak mau`;
+
+    const target = document.getElementById("pantun");
+    const audio = document.getElementById("typeSound");
+    let index = 0;
+    let started = false;
+    const totalKarakter = teks.length;
+    const durasiSuara = 15000;  // 15 detik dalam milidetik
+    const ketikSpeed = durasiSuara / totalKarakter;  // Kecepatan per karakter dalam milidetik
+
+    function startTyping() {
+      if (started) return;
+      started = true;
+      document.querySelector('.info').remove();
+      audio.play(); // Mulai audio sekali
+      ketik();
+    }
+
+    function ketik() {
+      if (index < totalKarakter) {
+        target.innerHTML = teks.substring(0, index + 1) + '<span class="cursor"></span>';
+        const char = teks.charAt(index);
+        if (char !== ' ' && char !== '\n') {
+          audio.currentTime = 0;  // Set audio ke awal
+          audio.play();  // Mainkan suara
+        }
+        index++;
+        setTimeout(ketik, ketikSpeed);  // Kecepatan ketik sesuai panjang teks
+      } else {
+        target.innerHTML = teks;  // Selesai ketik
+        audio.pause();         // Hentikan audio
+        audio.currentTime = 0; // Balikin audio ke awal
+      }
+    }
+  </script>
+</body>
+</html>

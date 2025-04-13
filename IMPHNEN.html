@@ -62,14 +62,13 @@ Disuruh ngoding dia tak mau`;
     let index = 0;
     let started = false;
     const totalKarakter = teks.length;
-    const durasiSuara = 15000;  // 15 detik dalam milidetik
-    const ketikSpeed = durasiSuara / totalKarakter;  // Kecepatan per karakter dalam milidetik
-
+    const durasiSuara = 15000;  
+    const ketikSpeed = durasiSuara / totalKarakter; 
     function startTyping() {
       if (started) return;
       started = true;
       document.querySelector('.info').remove();
-      audio.play(); // Mulai audio sekali
+      audio.play(); 
       ketik();
     }
 
@@ -78,15 +77,15 @@ Disuruh ngoding dia tak mau`;
         target.innerHTML = teks.substring(0, index + 1) + '<span class="cursor"></span>';
         const char = teks.charAt(index);
         if (char !== ' ' && char !== '\n') {
-          audio.currentTime = 0;  // Set audio ke awal
-          audio.play();  // Mainkan suara
+          audio.currentTime = 0;  
+          audio.play();
         }
         index++;
-        setTimeout(ketik, ketikSpeed);  // Kecepatan ketik sesuai panjang teks
+        setTimeout(ketik, ketikSpeed);  \
       } else {
-        target.innerHTML = teks;  // Selesai ketik
-        audio.pause();         // Hentikan audio
-        audio.currentTime = 0; // Balikin audio ke awal
+        target.innerHTML = teks;  
+        audio.pause();         
+        audio.currentTime = 0; 
       }
     }
   </script>
